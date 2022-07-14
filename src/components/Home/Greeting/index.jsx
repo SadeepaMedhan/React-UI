@@ -2,7 +2,7 @@ import { Component } from "react";
 import Typography from '@mui/material/Typography';
 import ijse_logo from "../../../assets/img/ijse_logo.png";
 import { styleSheet } from "./style";
-import { withStyles } from "@mui/styles";
+import {withStyles} from "@mui/styles";
 
 class Greeting extends Component {
     constructor(props) {
@@ -12,6 +12,7 @@ class Greeting extends Component {
     render() {
         const { classes } = this.props;
         return (
+            // style={{backgroundColor: 'red'}}
             <div className={classes.container}>
                 <div>
                     <Typography variant="h3" gutterBottom component="div">
