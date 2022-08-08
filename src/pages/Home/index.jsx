@@ -13,6 +13,7 @@ import {styleSheet} from "./style";
 import CategoryIcon from '@mui/icons-material/Category';
 import Login from "../Login";
 import Product from "../Product";
+import Cart from "../Cart";
 
 class HomePage extends Component {
     constructor(props) {
@@ -49,6 +50,9 @@ class HomePage extends Component {
         const signUpHandleClose = () => {
             this.setState({signInIcon: null});
         }
+        const logout = () => {
+            this.setState({user: null});
+        };
 
         return (
            <div>
@@ -58,7 +62,7 @@ class HomePage extends Component {
 
                <div>
                    <Stack direction="row"
-                          justifyContent="space-between"
+                          justifyContent="space-around"
                           alignItems="center"
                           spacing={2}>
 
@@ -92,10 +96,9 @@ class HomePage extends Component {
 
                                <Tabs orientation="vertical" value={this.state.tabValue} onChange={navTabChange}
                                      aria-label="menu tabs">
-                                   <Tab label="Home" {...a11yProps(0)} />
-                                   <Tab label="Vehicles" {...a11yProps(1)} />
-                                   <Tab label="Service" {...a11yProps(2)} />
-                                   <Tab label="About" {...a11yProps(3)} />
+                                   <Tab label="Dashboard" {...a11yProps(0)} />
+                                   <Tab label="Product" {...a11yProps(1)} />
+                                   <Tab label="Cart" {...a11yProps(2)} />
 
                                </Tabs>
                            </Menu>
@@ -148,7 +151,7 @@ class HomePage extends Component {
                                        </ListItemIcon>
                                        Settings
                                    </MenuItem>
-                                   <MenuItem >
+                                   <MenuItem onClick={logout}>
                                        <ListItemIcon>
                                            <LogoutIcon fontSize="small"/>
                                        </ListItemIcon>
@@ -219,10 +222,7 @@ class HomePage extends Component {
                    <Product/>
                </TabPanel>
                <TabPanel value={this.state.tabValue} index={2}>
-
-               </TabPanel>
-               <TabPanel value={this.state.tabValue} index={3}>
-
+                    <Cart/>
                </TabPanel>
 
            </div>

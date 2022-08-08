@@ -30,7 +30,6 @@ class Login extends Component {
         };
         const submit = () => {
             swal("Sign In Successful!", "", "success");
-             //window.location.assign('/home',{state:{user:'abc'}});
             this.props.setUser(this.state.userName);
         };
         return (
@@ -76,7 +75,7 @@ class Login extends Component {
                         </Stack>
                         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
                             <Stack>
-                                <span>Create new user account</span>
+                                <p>Create new user account <a href="/signUp">Click here</a></p>
                             </Stack>
                             <Button autoFocus type="submit"
                                     style={{fontWeight: 'bold', width: '95px', borderRadius: 15}} color="info"
