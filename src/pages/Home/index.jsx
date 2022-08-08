@@ -11,6 +11,8 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import {withStyles} from "@mui/styles";
 import {styleSheet} from "./style";
 import CategoryIcon from '@mui/icons-material/Category';
+import Login from "../Login";
+import Product from "../Product";
 
 class HomePage extends Component {
     constructor(props) {
@@ -20,9 +22,13 @@ class HomePage extends Component {
             tabValue: 0,
             openLogin: false,
             signInIcon: null,
-            user: props.location.state,
+            user:null,
 
         }
+    }
+    getUser = (data) => {
+        this.setState({user: data})
+        console.log("get " + data)
     }
 
     render() {
@@ -46,8 +52,15 @@ class HomePage extends Component {
 
         return (
            <div>
+               {this.state.user === null &&
+                   <Login setUser={this.getUser.bind(this)}/>
+               }
+
                <div>
-                   <div>
+                   <Stack direction="row"
+                          justifyContent="space-between"
+                          alignItems="center"
+                          spacing={2}>
 
                        <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                            <Tabs value={this.state.tabValue} onChange={navTabChange}
@@ -57,95 +70,95 @@ class HomePage extends Component {
                                <Tab label="Cart" {...a11yProps(2)} />
                            </Tabs>
                        </Box>
-
-                   </div>
-                   <div>
-                       <IconButton size="large"
-                                   aria-label="account of current user"
-                                   aria-controls="menu-appbar"
-                                   aria-haspopup="true"
-                                   onClick={handleOpenNavMenu}
-                                   color="inherit"
-                                   sx={{display: {xs: 'block', md: 'none'},}}>
-                           <MenuIcon/>
-                       </IconButton>
-
-                       <Menu id="menu-appbar"
-                             anchorEl={this.state.anchorElNav}
-                             anchorOrigin={{vertical: 'bottom', horizontal: 'left',}}
-                             keepMounted
-                             transformOrigin={{vertical: 'top', horizontal: 'left',}}
-                             open={Boolean(this.state.anchorElNav)}
-                             onClose={handleCloseNavMenu}
-                             sx={{display: {xs: 'fex', md: 'none'},}}>
-
-                           <Tabs orientation="vertical" value={this.state.tabValue} onChange={navTabChange}
-                                 aria-label="menu tabs">
-                               <Tab label="Home" {...a11yProps(0)} />
-                               <Tab label="Vehicles" {...a11yProps(1)} />
-                               <Tab label="Service" {...a11yProps(2)} />
-                               <Tab label="About" {...a11yProps(3)} />
-
-                           </Tabs>
-                       </Menu>
                        <div>
+                           <IconButton size="large"
+                                       aria-label="account of current user"
+                                       aria-controls="menu-appbar"
+                                       aria-haspopup="true"
+                                       onClick={handleOpenNavMenu}
+                                       color="inherit"
+                                       sx={{display: {xs: 'block', md: 'none'},}}>
+                               <MenuIcon/>
+                           </IconButton>
 
-                           {this.state.user !== null && (
-                               <Chip icon={<AccountCircleIcon/>} label={this.state.user.name}
-                                     onClick={signInHandleMenu}/>)}
-                           <Menu anchorEl={this.state.signInIcon}
-                                 id="account-menu"
-                                 open={Boolean(this.state.signInIcon)}
-                                 onClose={signUpHandleClose}
-                                 onClick={signUpHandleClose}
-                                 PaperProps={{
-                                     elevation: 0,
-                                     sx: {
-                                         overflow: 'visible',
-                                         filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))', mt: 1.5,
-                                         '& .MuiAvatar-root': {
-                                             width: 32, height: 32, ml: -0.5, mr: 1,
-                                         },
-                                         '&:before': {
-                                             content: '""',
-                                             display: 'block', position: 'absolute',
-                                             top: 0, right: 14, width: 10, height: 10,
-                                             bgcolor: 'background.paper', zIndex: 0,
-                                             transform: 'translateY(-50%) rotate(45deg)',
-                                         },
-                                     },
-                                 }}
-                                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
-                                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                           >
-                               <MenuItem>
-                                   <Avatar/> Profile
-                               </MenuItem>
-                               <MenuItem >
-                                   <ShoppingCartIcon/> My Cart
-                               </MenuItem>
-                               <Divider/>
-                               <MenuItem>
-                                   <ListItemIcon>
-                                       <PersonAddIcon fontSize="small"/>
-                                   </ListItemIcon>
-                                   Add another account
-                               </MenuItem>
-                               <MenuItem>
-                                   <ListItemIcon>
-                                       <SettingsIcon fontSize="small"/>
-                                   </ListItemIcon>
-                                   Settings
-                               </MenuItem>
-                               <MenuItem >
-                                   <ListItemIcon>
-                                       <LogoutIcon fontSize="small"/>
-                                   </ListItemIcon>
-                                   Logout
-                               </MenuItem>
+                           <Menu id="menu-appbar"
+                                 anchorEl={this.state.anchorElNav}
+                                 anchorOrigin={{vertical: 'bottom', horizontal: 'left',}}
+                                 keepMounted
+                                 transformOrigin={{vertical: 'top', horizontal: 'left',}}
+                                 open={Boolean(this.state.anchorElNav)}
+                                 onClose={handleCloseNavMenu}
+                                 sx={{display: {xs: 'fex', md: 'none'},}}>
+
+                               <Tabs orientation="vertical" value={this.state.tabValue} onChange={navTabChange}
+                                     aria-label="menu tabs">
+                                   <Tab label="Home" {...a11yProps(0)} />
+                                   <Tab label="Vehicles" {...a11yProps(1)} />
+                                   <Tab label="Service" {...a11yProps(2)} />
+                                   <Tab label="About" {...a11yProps(3)} />
+
+                               </Tabs>
                            </Menu>
+                           <div>
+
+                               {this.state.user !== null && (
+                                   <Chip icon={<AccountCircleIcon/>} label={this.state.user}
+                                         onClick={signInHandleMenu}/>)}
+                               <Menu anchorEl={this.state.signInIcon}
+                                     id="account-menu"
+                                     open={Boolean(this.state.signInIcon)}
+                                     onClose={signUpHandleClose}
+                                     onClick={signUpHandleClose}
+                                     PaperProps={{
+                                         elevation: 0,
+                                         sx: {
+                                             overflow: 'visible',
+                                             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))', mt: 1.5,
+                                             '& .MuiAvatar-root': {
+                                                 width: 32, height: 32, ml: -0.5, mr: 1,
+                                             },
+                                             '&:before': {
+                                                 content: '""',
+                                                 display: 'block', position: 'absolute',
+                                                 top: 0, right: 14, width: 10, height: 10,
+                                                 bgcolor: 'background.paper', zIndex: 0,
+                                                 transform: 'translateY(-50%) rotate(45deg)',
+                                             },
+                                         },
+                                     }}
+                                     transformOrigin={{horizontal: 'right', vertical: 'top'}}
+                                     anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                               >
+                                   <MenuItem>
+                                       <Avatar/> Profile
+                                   </MenuItem>
+                                   <MenuItem >
+                                       <ShoppingCartIcon/> My Cart
+                                   </MenuItem>
+                                   <Divider/>
+                                   <MenuItem>
+                                       <ListItemIcon>
+                                           <PersonAddIcon fontSize="small"/>
+                                       </ListItemIcon>
+                                       Add another account
+                                   </MenuItem>
+                                   <MenuItem>
+                                       <ListItemIcon>
+                                           <SettingsIcon fontSize="small"/>
+                                       </ListItemIcon>
+                                       Settings
+                                   </MenuItem>
+                                   <MenuItem >
+                                       <ListItemIcon>
+                                           <LogoutIcon fontSize="small"/>
+                                       </ListItemIcon>
+                                       Logout
+                                   </MenuItem>
+                               </Menu>
+                           </div>
                        </div>
-                   </div>
+                   </Stack>
+
                </div>
 
                <TabPanel value={this.state.tabValue} index={0}>
@@ -200,6 +213,16 @@ class HomePage extends Component {
                        </Stack>
 
                    </Stack>
+               </TabPanel>
+
+               <TabPanel value={this.state.tabValue} index={1}>
+                   <Product/>
+               </TabPanel>
+               <TabPanel value={this.state.tabValue} index={2}>
+
+               </TabPanel>
+               <TabPanel value={this.state.tabValue} index={3}>
+
                </TabPanel>
 
            </div>

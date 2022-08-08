@@ -30,11 +30,13 @@ class Login extends Component {
         };
         const submit = () => {
             swal("Sign In Successful!", "", "success");
-             window.location.assign('/home',{state:{user:'abc'}});
-
+             //window.location.assign('/home',{state:{user:'abc'}});
+            this.props.setUser(this.state.userName);
         };
         return (
-            <div >
+            <div style={{position:'absolute', width: '100vw',
+                background: 'white',
+                zIndex: 10}}>
                 <ValidatorForm  onSubmit={submit} onError={errors => console.log(errors)}>
 
                     <Stack sx={{right: 0,
