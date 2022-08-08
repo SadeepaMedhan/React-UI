@@ -1,7 +1,5 @@
 import {Component} from "react";
 import {
-    Avatar,
-    Chip,
     Divider,
     Paper,
     Stack,
@@ -14,6 +12,7 @@ import {
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import Button from "@mui/material/Button";
 import swal from "sweetalert";
+import UsersService from "../../services/UsersService";
 
 
 class SignUp extends Component {
@@ -32,6 +31,23 @@ class SignUp extends Component {
             latValue: '',
             longValue: '',
             mobileNo: '',
+
+            usersList:[],
+        }
+    }
+    componentDidMount() {
+        this.loadUsersData();
+    }
+
+
+    loadUsersData = async () => {
+        const res = await UsersService.fetchUsers();
+        if (res.status === 200) {
+            console.log(res.data.length)
+            console.log(res.data)
+            this.setState({usersList:res.data})
+        } else {
+            console.log("fetching error: " + res)
         }
     }
 
@@ -178,7 +194,7 @@ class SignUp extends Component {
 
                                 </Stack>
 
-                            <Stack direction="row" justifyContent="center"
+                            <Stack direction="row" justifyContent="flex-end"
                                    alignItems="center"
                                    spacing={1}>
                                 <Button color="info" variant="contained"
@@ -214,7 +230,22 @@ class SignUp extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-
+                                {
+                                    this.state.usersList.map((row) => (
+                                        <TableRow>
+                                            <TableCell align="left">{row.name.firstname+" "+row.name.lastname}</TableCell>
+                                            <TableCell align="left">{row.email}</TableCell>
+                                            <TableCell align="left">{row.username}</TableCell>
+                                            <TableCell align="left">
+                                                <p>{row.address.number}, {row.address.street},</p>
+                                                <p>{row.address.city}</p>
+                                                <p>{row.address.zipcode}</p>
+                                            </TableCell>
+                                            <TableCell align="left">{row.phone}</TableCell>
+                                            <TableCell align="left">{row.phone}</TableCell>
+                                        </TableRow>
+                                    ))
+                                }
                             </TableBody>
                         </Table>
                     </TableContainer>

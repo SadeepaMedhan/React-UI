@@ -1,9 +1,8 @@
 import {Component} from "react";
 import {
     Avatar,
-    Chip,
-    Divider,
-    Paper,
+    Divider, FormControl, InputLabel, MenuItem,
+    Paper, Select,
     Stack,
     Table, TableBody,
     TableCell,
@@ -13,6 +12,7 @@ import {
 } from "@mui/material";
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import Button from "@mui/material/Button";
+import ProductService from "../../services/ProductService";
 
 
 class Product extends Component {
@@ -20,6 +20,37 @@ class Product extends Component {
         super(props);
         this.state = {
             currentFile: undefined,
+            category: "None",
+            tittle: '',
+            price: '',
+            description: '',
+            categoriesList:[],
+            productList:[],
+        }
+    }
+
+    componentDidMount() {
+        this.loadProductsData();
+        this.loadCategories();
+    }
+
+
+    loadProductsData = async () => {
+        const res = await ProductService.fetchProducts();
+        if (res.status === 200) {
+            console.log(res.data.length)
+            console.log(res.data)
+            this.setState({productList:res.data})
+        } else {
+            console.log("fetching error: " + res)
+        }
+    }
+    loadCategories = async () => {
+        const res = await ProductService.fetchCategories();
+        if (res.status === 200) {
+            this.setState({categoriesList:res.data})
+        } else {
+            console.log("fetching error: " + res)
         }
     }
 
@@ -35,7 +66,9 @@ class Product extends Component {
             data.append("myFile", file, fileName);
 
         }
-
+        const categoryChange = (event) => {
+            this.setState({category: event.target.value});
+        };
         return (
             <div>
                 <Stack direction="column" justifyContent="center" alignItems="center" spacing={2}
@@ -51,24 +84,47 @@ class Product extends Component {
                                         label="Tittle" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
+                                        value={this.state.tittle}
+                                        onChange={(e) => {
+                                            this.setState({tittle:e.target.value})
+                                        }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Price" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
+                                        value={this.state.price}
+                                        onChange={(e) => {
+                                            this.setState({price:e.target.value})
+                                        }}
                                         errorMessages={['this field is required']}/>
 
                                 </Stack>
                                 <Stack direction="row" spacing={4}>
-                                    <TextValidator
-                                        label="Category" variant="outlined"
-                                        size="small" color="primary"
-                                        validators={['required',]}
-                                        errorMessages={['this field is required']}/>
+                                    <FormControl sx={{minWidth: 222}}>
+                                        <InputLabel id="lblCategory">Category</InputLabel>
+                                        <Select
+                                            labelId="lblCategory"
+                                            id="demo-simple-select"
+                                            value={this.state.category}
+                                            label="Vehicle Type"
+                                            onChange={categoryChange}
+                                        >
+                                            <MenuItem value="None">None</MenuItem>
+                                            {this.state.categoriesList.map((category) => (
+                                                    <MenuItem value={category}>{category}</MenuItem>
+                                                ))
+                                            }
+                                        </Select>
+                                    </FormControl>
                                     <TextValidator
                                         label="Description" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
+                                        value={this.state.description}
+                                        onChange={(e) => {
+                                            this.setState({description:e.target.value})
+                                        }}
                                         errorMessages={['this field is required']}/>
 
                                 </Stack>
@@ -107,7 +163,7 @@ class Product extends Component {
                                     </Button>
                                 </Stack>
                             </Stack>
-                            <Stack direction="row" justifyContent="center"
+                            <Stack direction="row" justifyContent="flex-end"
                                    alignItems="center"
                                    spacing={1}>
                                 <Button color="info" variant="contained"
@@ -142,7 +198,20 @@ class Product extends Component {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-
+                                {
+                                    this.state.productList.map((row) => (
+                                        <TableRow>
+                                            <TableCell align="left">{row.title}</TableCell>
+                                            <TableCell align="left">
+                                                <Avatar alt="img" src={row.image}/>
+                                            </TableCell>
+                                            <TableCell align="left">{row.price}</TableCell>
+                                            <TableCell align="left">{row.category}</TableCell>
+                                            <TableCell align="left">{row.description}</TableCell>
+                                            <TableCell align="left">{row.id}</TableCell>
+                                        </TableRow>
+                                    ))
+                                }
                             </TableBody>
                         </Table>
                     </TableContainer>

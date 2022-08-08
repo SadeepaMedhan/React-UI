@@ -42,14 +42,15 @@ class Login extends Component {
                         margin: 'auto',
                         left: 0,
                         height: '100vh',
-                        bottom: 0,}} direction="column" justifyContent="center" alignItems="center" spacing={1}
+                        bottom: 0,}} direction="column" justifyContent="center" alignItems="center" spacing={3}
                            width={{xs: '300px', md: '450px'}} >
 
+                        <h2>Login</h2>
 
                         <Stack>
-                            <TextValidator label="User Name" variant="outlined" helperText="User name" size="small"
+                            <TextValidator label="User Name" variant="outlined" size="small"
                                            color="primary"
-                                           errorMessages="Incorrect entry !"
+                                           errorMessages="Incorrect user name !"
                                            value={this.state.userName}
                                            onChange={(e) => {
                                                this.setState({userName:e.target.value})
@@ -73,13 +74,13 @@ class Login extends Component {
                                            } validators={['required',]}
                             />
                         </Stack>
-                        <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={1}>
-                            <Stack>
-                                <p>Create new user account <a href="/signUp">Click here</a></p>
-                            </Stack>
+                        <Stack direction="column" justifyContent="space-between" alignItems="center" spacing={1}>
                             <Button autoFocus type="submit"
                                     style={{fontWeight: 'bold', width: '95px', borderRadius: 15}} color="info"
                                     variant="contained">Sign In</Button>
+                            <Stack>
+                                <p>Create new user account <a href="/signUp">Click here</a></p>
+                            </Stack>
                         </Stack>
 
                     </Stack>

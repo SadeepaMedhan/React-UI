@@ -64,7 +64,7 @@ class HomePage extends Component {
                    <Stack direction="row"
                           justifyContent="space-around"
                           alignItems="center"
-                          spacing={2}>
+                          spacing={2} sx={{borderBottom:'1px solid gray'}}>
 
                        <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                            <Tabs value={this.state.tabValue} onChange={navTabChange}
@@ -139,7 +139,7 @@ class HomePage extends Component {
                                        <ShoppingCartIcon/> My Cart
                                    </MenuItem>
                                    <Divider/>
-                                   <MenuItem>
+                                   <MenuItem onClick={logout}>
                                        <ListItemIcon>
                                            <PersonAddIcon fontSize="small"/>
                                        </ListItemIcon>
