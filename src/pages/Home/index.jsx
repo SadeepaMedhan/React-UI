@@ -20,7 +20,7 @@ class HomePage extends Component {
             tabValue: 0,
             openLogin: false,
             signInIcon: null,
-            user: null,
+            user: props.location.state,
 
         }
     }
