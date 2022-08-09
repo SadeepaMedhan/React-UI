@@ -43,21 +43,6 @@ class SignUp extends Component {
                 phone: '',
                 __v:''
             },
-            id:'',
-            email: '',
-            username: '',
-            password: '',
-            firstname: '',
-            lastname: '',
-            lat: '',
-            long: '',
-            city: '',
-            street: '',
-            number: '',
-            zipcode: '',
-            phone: '',
-            __v:'',
-
             usersList:[],
         }
     }
@@ -86,22 +71,7 @@ class SignUp extends Component {
             console.log(id)
         };
         const updateUser = (data) => {
-            this.setState({
-                    id:data.id,
-                    email:data.email,
-                    username: data.username,
-                    password: data.password,
-                    firstname: data.firstname,
-                    lastname: data.lastname,
-                    lat:data.lat,
-                    long: data.long,
-                    city: data.city,
-                    street: data.street,
-                    number: data.number,
-                    zipcode: data.zipcode,
-                    phone: data.phone,
-                    __v:data.__v,
-                })
+            this.setState({user:data})
         };
 
         return (
@@ -119,18 +89,22 @@ class SignUp extends Component {
                                         label="First Name" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.firstname}
+                                        value={this.state.user.name.firstname}
                                         onChange={(e) => {
-                                            this.setState({firstname:e.target.value})
+                                            let data = this.state.user;
+                                            data.name.firstname = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Last Name" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.lastname}
+                                        value={this.state.user.name.lastname}
                                         onChange={(e) => {
-                                            this.setState({lastname:e.target.value})
+                                            let data = this.state.user;
+                                            data.name.lastname = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -140,18 +114,22 @@ class SignUp extends Component {
                                         label="E mail" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.email}
+                                        value={this.state.user.email}
                                         onChange={(e) => {
-                                            this.setState({email:e.target.value})
+                                            let data = this.state.user;
+                                            data.email = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="User Name" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.username}
+                                        value={this.state.user.username}
                                         onChange={(e) => {
-                                            this.setState({username:e.target.value})
+                                            let data = this.state.user;
+                                            data.username = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -161,18 +139,22 @@ class SignUp extends Component {
                                         label="Password" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.password}
+                                        value={this.state.user.password}
                                         onChange={(e) => {
-                                            this.setState({password:e.target.value})
+                                            let data = this.state.user;
+                                            data.password = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="City" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.city}
+                                        value={this.state.user.address.city}
                                         onChange={(e) => {
-                                            this.setState({city:e.target.value})
+                                            let data = this.state.user;
+                                            data.address.city = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -182,18 +164,22 @@ class SignUp extends Component {
                                         label="Street" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.street}
+                                        value={this.state.user.address.street}
                                         onChange={(e) => {
-                                            this.setState({street:e.target.value})
+                                            let data = this.state.user;
+                                            data.address.street = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Street No" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.number}
+                                        value={this.state.user.address.number}
                                         onChange={(e) => {
-                                            this.setState({number:e.target.value})
+                                            let data = this.state.user;
+                                            data.address.number = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -203,18 +189,22 @@ class SignUp extends Component {
                                         label="Zip Code" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.zipcode}
+                                        value={this.state.user.address.zipcode}
                                         onChange={(e) => {
-                                            this.setState({zipcode:e.target.value})
+                                            let data = this.state.user;
+                                            data.address.zipcode = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Lat Value" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.lat}
+                                        value={this.state.user.address.geolocation.lat}
                                         onChange={(e) => {
-                                            this.setState({lat:e.target.value})
+                                            let data = this.state.user;
+                                            data.address.geolocation.lat = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -224,18 +214,22 @@ class SignUp extends Component {
                                         label="Long Value" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.long}
+                                        value={this.state.user.address.geolocation.long}
                                         onChange={(e) => {
-                                            this.setState({long:e.target.value})
+                                            let data = this.state.user;
+                                            data.address.geolocation.long = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Mobile No" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.phone}
+                                        value={this.state.user.phone}
                                         onChange={(e) => {
-                                            this.setState({phone:e.target.value})
+                                            let data = this.state.user;
+                                            data.phone = e.target.value;
+                                            this.setState({data})
                                         }}
                                         errorMessages={['this field is required']}/>
 
