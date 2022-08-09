@@ -1,36 +1,62 @@
 import {Component} from "react";
 import {
-    Divider,
+    Divider, IconButton,
     Paper,
     Stack,
     Table, TableBody,
     TableCell,
     TableContainer,
     TableHead,
-    TableRow
+    TableRow, Tooltip
 } from "@mui/material";
 import {TextValidator, ValidatorForm} from 'react-material-ui-form-validator';
 import Button from "@mui/material/Button";
 import swal from "sweetalert";
 import UsersService from "../../services/UsersService";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            fName: '',
-            lName: '',
+            user:{
+                id:'',
+                email: '',
+                username: '',
+                password: '',
+                name:{
+                    firstname: '',
+                    lastname: '',
+                },
+                address:{
+                    geolocation:{
+                        lat: '',
+                        long: '',
+                    },
+                    city: '',
+                    street: '',
+                    number: '',
+                    zipcode: '',
+                },
+                phone: '',
+                __v:''
+            },
+            id:'',
             email: '',
-            userName: '',
+            username: '',
             password: '',
+            firstname: '',
+            lastname: '',
+            lat: '',
+            long: '',
             city: '',
             street: '',
-            streetNo: '',
-            zipCode: '',
-            latValue: '',
-            longValue: '',
-            mobileNo: '',
+            number: '',
+            zipcode: '',
+            phone: '',
+            __v:'',
 
             usersList:[],
         }
@@ -56,6 +82,27 @@ class SignUp extends Component {
             swal("Sign Up Successful!", "", "success");
             window.location.assign('/home');
         };
+        const deleteUser = (id) => {
+            console.log(id)
+        };
+        const updateUser = (data) => {
+            this.setState({
+                    id:data.id,
+                    email:data.email,
+                    username: data.username,
+                    password: data.password,
+                    firstname: data.firstname,
+                    lastname: data.lastname,
+                    lat:data.lat,
+                    long: data.long,
+                    city: data.city,
+                    street: data.street,
+                    number: data.number,
+                    zipcode: data.zipcode,
+                    phone: data.phone,
+                    __v:data.__v,
+                })
+        };
 
         return (
             <div>
@@ -72,18 +119,18 @@ class SignUp extends Component {
                                         label="First Name" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.fName}
+                                        value={this.state.firstname}
                                         onChange={(e) => {
-                                            this.setState({fName:e.target.value})
+                                            this.setState({firstname:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Last Name" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.lName}
+                                        value={this.state.lastname}
                                         onChange={(e) => {
-                                            this.setState({lName:e.target.value})
+                                            this.setState({lastname:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -102,9 +149,9 @@ class SignUp extends Component {
                                         label="User Name" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.userName}
+                                        value={this.state.username}
                                         onChange={(e) => {
-                                            this.setState({userName:e.target.value})
+                                            this.setState({username:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -144,9 +191,9 @@ class SignUp extends Component {
                                         label="Street No" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.streetNo}
+                                        value={this.state.number}
                                         onChange={(e) => {
-                                            this.setState({streetNo:e.target.value})
+                                            this.setState({number:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -156,18 +203,18 @@ class SignUp extends Component {
                                         label="Zip Code" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.zipCode}
+                                        value={this.state.zipcode}
                                         onChange={(e) => {
-                                            this.setState({zipCode:e.target.value})
+                                            this.setState({zipcode:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Lat Value" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.latValue}
+                                        value={this.state.lat}
                                         onChange={(e) => {
-                                            this.setState({latValue:e.target.value})
+                                            this.setState({lat:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -177,18 +224,18 @@ class SignUp extends Component {
                                         label="Long Value" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.longValue}
+                                        value={this.state.long}
                                         onChange={(e) => {
-                                            this.setState({longValue:e.target.value})
+                                            this.setState({long:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
                                     <TextValidator
                                         label="Mobile No" variant="outlined"
                                         size="small" color="primary"
                                         validators={['required',]}
-                                        value={this.state.mobileNo}
+                                        value={this.state.phone}
                                         onChange={(e) => {
-                                            this.setState({mobileNo:e.target.value})
+                                            this.setState({phone:e.target.value})
                                         }}
                                         errorMessages={['this field is required']}/>
 
@@ -242,7 +289,42 @@ class SignUp extends Component {
                                                 <p>{row.address.zipcode}</p>
                                             </TableCell>
                                             <TableCell align="left">{row.phone}</TableCell>
-                                            <TableCell align="left">{row.phone}</TableCell>
+                                            <TableCell align="left">
+                                                <Tooltip title="Edit">
+                                                    <IconButton
+                                                        onClick={() => {
+                                                           updateUser(row);
+                                                        }}
+                                                    >
+                                                        <EditIcon color="primary"/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                                <Tooltip title="Delete">
+                                                    <IconButton
+                                                        onClick={() => {
+                                                            swal({
+                                                                title: "Are you sure?",
+                                                                text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                icon: "warning",
+                                                                buttons: true,
+                                                                dangerMode: true,
+                                                            })
+                                                                .then((willDelete) => {
+                                                                    if (willDelete) {
+                                                                        deleteUser(row.id);
+                                                                        swal("Poof! Your imaginary file has been deleted!", {
+                                                                            icon: "success",
+                                                                        });
+                                                                    } else {
+                                                                        swal("Your imaginary file is safe!");
+                                                                    }
+                                                                });
+                                                        }}
+                                                    >
+                                                        <DeleteIcon color="error"/>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </TableCell>
                                         </TableRow>
                                     ))
                                 }
