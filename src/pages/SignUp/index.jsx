@@ -26,19 +26,10 @@ class SignUp extends Component {
                 email: '',
                 username: '',
                 password: '',
-                name:{
-                    firstname: '',
-                    lastname: '',
-                },
+                name:{firstname: '', lastname: '',},
                 address:{
-                    geolocation:{
-                        lat: '',
-                        long: '',
-                    },
-                    city: '',
-                    street: '',
-                    number: '',
-                    zipcode: '',
+                    geolocation:{lat: '', long: '',},
+                    city: '', street: '', number: '', zipcode: '',
                 },
                 phone: '',
                 __v:''
